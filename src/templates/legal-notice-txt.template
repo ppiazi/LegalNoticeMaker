@@ -1,0 +1,10 @@
+Open Source Software Notice
+
+This application is Copyright ? {{sw_year}}, {{comapy_name}}. All Rights Reserved.
+This application use Open Source Software (OSS). You can find the source code of these open source projects, along with applicable license information, below. We are deeply grateful to these developers for their work and contributions.
+
+Any questions about our use of licensed work can be sent to {{comapy_email}}
+
+{% for oss_item_name in oss_list %}
+    {{oss_item_name}}
+{% endfor %}

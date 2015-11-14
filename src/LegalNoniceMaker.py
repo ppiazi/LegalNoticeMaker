@@ -17,6 +17,17 @@ limitations under the License.
 import sys
 import os
 import getopt
+from jinja2 import Environment, FileSystemLoader
+
+PATH = os.path.dirname(os.path.abspath(__file__))
+
+class LegalNoticeMaker:
+    def __init__(self):
+        self.env = Environment(loader=FileSystemLoader(os.path.join(PATH, 'templates')))
+        self.txt_maker = self.env.get_template('legal-notice-txt.template')
+        self.oss_list = {"cximage", "ffmpeg", "srio"}
+        print(self.txt_maker.render(sw_year="2015", comapy_name="LIGNex1", comapy_email="ppiazi@gmail.com", oss_list=self.oss_list))
+
 
 if __name__ == "__main__":
-	pass
+	LNM = LegalNoticeMaker()
