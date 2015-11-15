@@ -33,6 +33,5 @@ class LegalNoticeMaker:
         self.info['company_email'] = "ppiazi@gmail.com"
         print(self.txt_maker.render(info=self.info, oss_list=self.oss_list))
 
-
 if __name__ == "__main__":
 	LNM = LegalNoticeMaker()
