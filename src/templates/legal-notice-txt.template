@@ -15,6 +15,11 @@ Any questions about our use of licensed work can be sent to {{info.company_email
 
 {% endfor %}
 ----------------------------------------------------------------------------------------------------------------
+
+****************************************************************************************************************
 {% for oss_license in oss_license_list %}{{oss_license.oss_license}}
-    {{oss_license.oss_license_notice}}
+
+{{oss_license.oss_license_notice}}
+
+****************************************************************************************************************
 {% endfor %}

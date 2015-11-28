@@ -64,6 +64,15 @@ class LegalNoticeMaker:
     def readLicenseNotice(self, oss_license):
         notice = ""
 
+        license_file = "..\\license-list\\" + oss_license + ".txt"
+
+        try:
+            fo = open(license_file, "r")
+            notice = fo.read()
+            fo.close()
+        except:
+            notice = "ERROR : %s" % (license_file)
+
         return notice
 
     def make(self):

@@ -1,4 +1,4 @@
 OSS,URL,Copyright,license,ETC
-CxImage,http://www.xdp.it/cximage/,"Copyright (C) 2001 - 2008, Davide Pizzolato",Apache License 2.0,
-ffmepg,https://www.ffmpeg.org/,2007-2015 The Android Open Source Project,LGPL2.1,
-JSON-java,http://github.com/douglascrockford/JSON-java/,2015 Douglas Crockford,MIT License,
+CxImage,http://www.xdp.it/cximage/,"Copyright (C) 2001 - 2008, Davide Pizzolato",Apache-2.0,
+ffmepg,https://www.ffmpeg.org/,2007-2015 The Android Open Source Project,LGPL-2.1,
+JSON-java,http://github.com/douglascrockford/JSON-java/,2015 Douglas Crockford,MIT,
