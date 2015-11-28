@@ -2,10 +2,16 @@ Open Source Software Notice
 
 This application ({{info.sw}}) is Copyright (c) {{info.sw_year}}, {{info.company_name}}. All Rights Reserved.
 This application use Open Source Software (OSS).
-You can find the source code of these open source projects, along with applicable license information, below. We are deeply grateful to these developers for their work and contributions.
-
+You can find the source code of these open source projects, along with applicable license information, below.
+We are deeply grateful to these developers for their work and contributions.
 Any questions about our use of licensed work can be sent to {{info.company_email}}
 
-{% for oss_item_name in oss_list %}
-    {{oss_item_name}}
+----------------------------------------------------------------------------------------------------------------
+{% for oss in oss_list %}{{oss.oss}}
+    {{oss.oss_url}}
+    {{oss.oss_copyright}}
+    {{oss.oss_license}}
+    {% if oss_etc != "" %}{{oss.oss_etc}}{% else %}{% endif %}
+
 {% endfor %}
+----------------------------------------------------------------------------------------------------------------
