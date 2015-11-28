@@ -27,6 +27,7 @@ class LegalNoticeMaker:
         self.env = Environment(loader=FileSystemLoader(os.path.join(PATH, 'templates')))
         self.txt_maker = self.env.get_template('legal-notice-txt.template')
         self.oss_list = []
+        self.oss_license_list = []
         self.info = {}
         self.info['sw'] = "Test SW"
         self.info['sw_year'] = "2015"
@@ -53,11 +54,21 @@ class LegalNoticeMaker:
             temp_oss["oss_license"] = row_data[3]
             temp_oss["oss_etc"] = row_data[4]
 
+            temp_oss_license = {}
+            temp_oss_license["oss_license"] = temp_oss["oss_license"]
+            temp_oss_license["oss_license_notice"] = self.readLicenseNotice(temp_oss_license["oss_license"])
+            self.oss_license_list.append(temp_oss_license)
+
             self.oss_list.append(temp_oss)
+
+    def readLicenseNotice(self, oss_license):
+        notice = ""
+
+        return notice
 
     def make(self):
         fo = open("output.txt", "w")
-        fo.write(self.txt_maker.render(info=self.info, oss_list=self.oss_list))
+        fo.write(self.txt_maker.render(info=self.info, oss_list=self.oss_list, oss_license_list=self.oss_license_list))
         fo.close()
 
 if __name__ == "__main__":
