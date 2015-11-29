@@ -23,24 +23,40 @@ from jinja2 import Environment, FileSystemLoader
 PATH = os.path.dirname(os.path.abspath(__file__))
 
 class LegalNoticeMaker:
-    def __init__(self):
+    def __init__(self, swinfo_file="swinfo.csv", ossinfo_file="data.csv"):
         self.env = Environment(loader=FileSystemLoader(os.path.join(PATH, 'templates')))
         self.txt_maker = self.env.get_template('legal-notice-txt.template')
         self.oss_list = []
         self.oss_license_list = []
         self.oss_license_dict = {}
         self.info = {}
-        self.info['sw'] = "Test SW"
-        self.info['sw_year'] = "2015"
-        self.info['company_name'] = "PPIAZI"
-        self.info['company_email'] = "ppiazi@gmail.com"
+        self.swinfo_file = swinfo_file
+        self.ossinfo_file = ossinfo_file
 
-        self.readCsv()
-        self.make()
+        self.readSwData()
+        self.readOssInfo()
+        self.makeLegalNotice()
 
-    def readCsv(self):
-        fo = open("data.csv", "r")
+    def readSwData(self):
+        fo = open(self.swinfo_file, "r")
         csv_reader = csv.reader(fo, delimiter=",")
+
+        row_cnt = 0
+        for row_data in csv_reader:
+            if row_cnt == 0:
+                row_cnt = row_cnt + 1
+                continue
+            self.info['sw'] = row_data[0]
+            self.info['sw_year'] = row_data[1]
+            self.info['company_name'] = row_data[2]
+            self.info['company_email'] = row_data[3]
+            break
+        fo.close()
+
+    def readOssInfo(self):
+        fo = open(self.ossinfo_file, "r")
+        csv_reader = csv.reader(fo, delimiter=",")
+
         row_cnt = 0
         for row_data in csv_reader:
             if row_cnt == 0:
@@ -66,6 +82,7 @@ class LegalNoticeMaker:
         # sort oss_license_dict by key
         for t_key in sorted(self.oss_license_dict):
             self.oss_license_list.append(self.oss_license_dict[t_key])
+        fo.close()
 
     def readLicenseNotice(self, oss_license):
         notice = ""
@@ -81,10 +98,34 @@ class LegalNoticeMaker:
 
         return notice
 
-    def make(self):
+    def makeLegalNotice(self):
         fo = open("output.txt", "w")
         fo.write(self.txt_maker.render(info=self.info, oss_list=self.oss_list, oss_license_list=self.oss_license_list))
         fo.close()
 
+def printUsage():
+    print("LegalNoticeMaker.py [-s <swinfo file>] [-d <ossdata file>]")
+
 if __name__ == "__main__":
-	LNM = LegalNoticeMaker()
+    optlist, args = getopt.getopt(sys.argv[1:], "s:d:o:")
+
+    p_swinfo = None
+    p_ossinfo = None
+
+    for op, p in optlist:
+        if op == "-s":
+            p_swinfo = p
+        elif op == "-d":
+            p_ossinfo = p
+        else:
+            print("Invalid Argument : %s / %s" % (op, p))
+            os._exit(1)
+
+    if p_swinfo == None or p_ossinfo == None:
+        printUsage()
+        os._exit(1)
+
+    LNM = LegalNoticeMaker(p_swinfo, p_ossinfo)
+
+
+
