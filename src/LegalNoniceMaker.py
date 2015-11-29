@@ -28,6 +28,7 @@ class LegalNoticeMaker:
         self.txt_maker = self.env.get_template('legal-notice-txt.template')
         self.oss_list = []
         self.oss_license_list = []
+        self.oss_license_dict = {}
         self.info = {}
         self.info['sw'] = "Test SW"
         self.info['sw_year'] = "2015"
@@ -47,19 +48,24 @@ class LegalNoticeMaker:
                 continue
             row_cnt = row_cnt + 1
 
+            # temporary oss entity
             temp_oss = {}
             temp_oss["oss"] = row_data[0]
             temp_oss["oss_url"] = row_data[1]
             temp_oss["oss_copyright"] = row_data[2]
             temp_oss["oss_license"] = row_data[3]
             temp_oss["oss_etc"] = row_data[4]
+            self.oss_list.append(temp_oss)
 
+            # temporary oss entity
             temp_oss_license = {}
             temp_oss_license["oss_license"] = temp_oss["oss_license"]
             temp_oss_license["oss_license_notice"] = self.readLicenseNotice(temp_oss_license["oss_license"])
-            self.oss_license_list.append(temp_oss_license)
+            self.oss_license_dict[temp_oss_license["oss_license"]] = temp_oss_license
 
-            self.oss_list.append(temp_oss)
+        # sort oss_license_dict by key
+        for t_key in sorted(self.oss_license_dict):
+            self.oss_license_list.append(self.oss_license_dict[t_key])
 
     def readLicenseNotice(self, oss_license):
         notice = ""
